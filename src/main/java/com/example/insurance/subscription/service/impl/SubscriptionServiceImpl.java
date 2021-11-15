@@ -48,7 +48,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     public Subscription removeSubscription(Long subscriptionId) {
         Subscription reward = subscriptionRepository.getById(subscriptionId);
         subscriptionRepository.deleteById(subscriptionId);
-        return reward;
+        return new Subscription(subscriptionId);
     }
 
     @Override

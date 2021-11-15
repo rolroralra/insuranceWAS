@@ -30,6 +30,10 @@ public class Reward {
         BeanUtils.copyProperties(rewardDto, this);
     }
 
+    public Reward(Long rewardId) {
+        this.id = rewardId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

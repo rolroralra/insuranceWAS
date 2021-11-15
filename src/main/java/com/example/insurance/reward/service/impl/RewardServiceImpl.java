@@ -24,8 +24,8 @@ public class RewardServiceImpl implements RewardService {
     }
 
     @Override
-    public Reward getReward(Long contractId) {
-        return rewardRepository.findById(contractId).orElse(null);
+    public Reward getReward(Long rewardId) {
+        return rewardRepository.findById(rewardId).orElse(null);
     }
 
     @Override
@@ -45,10 +45,10 @@ public class RewardServiceImpl implements RewardService {
     }
 
     @Override
-    public Reward removeReward(Long contractId) {
-        Reward reward = rewardRepository.getById(contractId);
-        rewardRepository.deleteById(contractId);
-        return reward;
+    public Reward removeReward(Long rewardId) {
+        Reward reward = rewardRepository.getById(rewardId);
+        rewardRepository.deleteById(rewardId);
+        return new Reward(rewardId);
     }
 
     @Override

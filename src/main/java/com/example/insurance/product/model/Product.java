@@ -1,6 +1,6 @@
-package com.example.insurance.subscription.model;
+package com.example.insurance.product.model;
 
-import com.example.insurance.subscription.controller.dto.SubscriptionDto;
+import com.example.insurance.product.controller.dto.ProductDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,7 +18,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Subscription {
+public class Product {
     @Id
     @GeneratedValue
     private Long id;
@@ -26,20 +26,20 @@ public class Subscription {
     @Column
     private String name;
 
-    public Subscription(SubscriptionDto subscriptionDto) {
-        BeanUtils.copyProperties(subscriptionDto, this);
+    public Product(ProductDto productDto) {
+        BeanUtils.copyProperties(productDto, this);
     }
 
-    public Subscription(Long subscriptionId) {
-        this.id = subscriptionId;
+    public Product(Long contractId) {
+        this.id = contractId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Subscription that = (Subscription) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
+        Product contract = (Product) o;
+        return Objects.equals(id, contract.id) && Objects.equals(name, contract.name);
     }
 
     @Override
@@ -51,4 +51,5 @@ public class Subscription {
     public String toString() {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
     }
+
 }

@@ -47,8 +47,6 @@ public class GsonUtil {
                     case NULL:
                         jsonReader.skipValue();
                         break;
-                    case END_DOCUMENT:
-                        break;
                     default:
                         throw new AssertionError(token);
                 }

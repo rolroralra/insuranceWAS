@@ -1,6 +1,7 @@
 package com.example.insurance.controller;
 
 import com.example.insurance.api.ApiResult;
+import com.example.insurance.common.GsonUtil;
 import com.example.insurance.contract.controller.dto.ContractDto;
 import com.example.insurance.contract.model.Contract;
 import com.google.gson.Gson;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.List;
 
@@ -30,6 +32,14 @@ public class ContractControllerTests {
         this.mockMvc = mockMvc;
     }
 
+    private ResultMatcher jsonResultMatcher() {
+        return result -> {
+            if (!GsonUtil.isJsonValid(result.getResponse().getContentAsString())) {
+                throw new Exception("Json Parser Failed.");
+            }
+        };
+    }
+
     @Test
     void test_get_all_contracts() throws Exception {
         ResultActions result =
@@ -38,7 +48,9 @@ public class ContractControllerTests {
                                 .accept(MediaType.APPLICATION_JSON)
                                 );
 
-        result.andDo(print()).andExpect(status().isOk());
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonResultMatcher());
 
         ApiResult<List<Contract>> apiResult = new Gson().fromJson(result.andReturn().getResponse().getContentAsString(), TypeToken.getParameterized(ApiResult.class, TypeToken.getParameterized(List.class, Contract.class).getType()).getType());
 
@@ -63,7 +75,8 @@ public class ContractControllerTests {
                                 .contentType(MediaType.APPLICATION_JSON)
                 );
 
-        result.andDo(print()).andExpect(status().isNotFound());
+        result.andDo(print())
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -84,7 +97,9 @@ public class ContractControllerTests {
                                 .content(contract.toString())
                 );
 
-        result.andDo(print()).andExpect(status().isOk());
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonResultMatcher());
 
         ApiResult<Contract> apiResult = new Gson().fromJson(result.andReturn().getResponse().getContentAsString(), TypeToken.getParameterized(ApiResult.class, Contract.class).getType());
 
@@ -109,7 +124,9 @@ public class ContractControllerTests {
                                 .content(new ContractDto(contract).toString())
                 );
 
-        result.andDo(print()).andExpect(status().isOk());
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonResultMatcher());
 
         ApiResult<Contract> apiResult = new Gson().fromJson(result.andReturn().getResponse().getContentAsString(), TypeToken.getParameterized(ApiResult.class, Contract.class).getType());
 
@@ -136,7 +153,9 @@ public class ContractControllerTests {
                                 .content(new ContractDto(contract).toString())
                 );
 
-        result.andDo(print()).andExpect(status().isOk());
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonResultMatcher());
 
         ApiResult<Contract> apiResult = new Gson().fromJson(result.andReturn().getResponse().getContentAsString(), TypeToken.getParameterized(ApiResult.class, Contract.class).getType());
 
@@ -158,7 +177,9 @@ public class ContractControllerTests {
                                 .accept(MediaType.APPLICATION_JSON)
                 );
 
-        result.andDo(print()).andExpect(status().isOk());
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonResultMatcher());
 
         ApiResult<Contract> apiResult = new Gson().fromJson(result.andReturn().getResponse().getContentAsString(), TypeToken.getParameterized(ApiResult.class, Contract.class).getType());
 
@@ -182,7 +203,9 @@ public class ContractControllerTests {
                                 .contentType(MediaType.APPLICATION_JSON)
                 );
 
-        result.andDo(print()).andExpect(status().isOk());
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonResultMatcher());
 
         ApiResult<List<Contract>> apiResult = new Gson().fromJson(result.andReturn().getResponse().getContentAsString(), TypeToken.getParameterized(ApiResult.class, TypeToken.getParameterized(List.class, Contract.class).getType()).getType());
 
@@ -216,7 +239,9 @@ public class ContractControllerTests {
                                 .content(new ContractDto(1L, "Contract01").toString())
                 );
 
-        result.andDo(print()).andExpect(status().isOk());
+        result.andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonResultMatcher());
 
         ApiResult<Contract> apiResult = new Gson().fromJson(result.andReturn().getResponse().getContentAsString(), TypeToken.getParameterized(ApiResult.class, Contract.class).getType());
 

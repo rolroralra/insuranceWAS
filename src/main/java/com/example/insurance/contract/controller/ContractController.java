@@ -6,7 +6,6 @@ import com.example.insurance.contract.model.Contract;
 import com.example.insurance.contract.service.ContractService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +31,6 @@ public class ContractController {
     }
 
     @RequestMapping(value = "/contract", method = {RequestMethod.POST})
-    @SuppressWarnings("unchecked")
     ApiResult<Contract> addContract(@RequestBody ContractDto contractDto) {
         if (contractService.isExist(contractDto)) {
             return ApiResult.succeed(contractService.modifyContract(contractDto));
@@ -42,7 +40,6 @@ public class ContractController {
     }
 
     @RequestMapping(value ="/contract/{contractId}", method = {RequestMethod.PUT})
-    @SuppressWarnings("unchecked")
     ApiResult<Contract> modifyContract(@PathVariable(value = "contractId") Long contractId, @RequestBody ContractDto contractDto) {
         contractDto.setId(contractId);
 

@@ -2,6 +2,7 @@ package com.example.insurance.controller.dto;
 
 import com.example.insurance.common.GsonUtil;
 import com.example.insurance.contract.controller.dto.ContractDto;
+import com.example.insurance.product.controller.dto.ProductDto;
 import com.example.insurance.reward.controller.dto.RewardDto;
 import com.example.insurance.subscription.controller.dto.SubscriptionDto;
 import org.assertj.core.api.Assertions;
@@ -15,7 +16,7 @@ import java.io.IOException;
 public class DtoTests {
 
     @ParameterizedTest
-    @ValueSource(classes = {SubscriptionDto.class, RewardDto.class, ContractDto.class})
+    @ValueSource(classes = {SubscriptionDto.class, RewardDto.class, ContractDto.class, ProductDto.class})
     void test_to_string(Class<?> dtoClass) {
         try {
             Assertions.assertThat(dtoClass.newInstance().toString())

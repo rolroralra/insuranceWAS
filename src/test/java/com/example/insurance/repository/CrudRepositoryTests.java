@@ -2,6 +2,8 @@ package com.example.insurance.repository;
 
 import com.example.insurance.contract.model.Contract;
 import com.example.insurance.contract.repository.ContractRepository;
+import com.example.insurance.product.model.Product;
+import com.example.insurance.product.repository.ProductRepository;
 import com.example.insurance.reward.model.Reward;
 import com.example.insurance.reward.repository.RewardRepository;
 import com.example.insurance.subscription.model.Subscription;
@@ -26,6 +28,8 @@ public class CrudRepositoryTests {
     private RewardRepository rewardRepository;
     @Autowired
     private SubscriptionRepository subscriptionRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Autowired
     private ApplicationContext applicationContext;
@@ -43,6 +47,10 @@ public class CrudRepositoryTests {
         if (subscriptionRepository.findAll().isEmpty()) {
             subscriptionRepository.save(new Subscription());
         }
+
+        if (productRepository.findAll().isEmpty()) {
+            productRepository.save(new Product());
+        }
     }
 
     private Object addNewInstance(Class<?> entityClass) {
@@ -55,19 +63,22 @@ public class CrudRepositoryTests {
         else if (Subscription.class.equals(entityClass)) {
             return subscriptionRepository.save(new Subscription());
         }
+        else if (Product.class.equals(entityClass)) {
+            return productRepository.save(new Product());
+        }
 
         return null;
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {ContractRepository.class, RewardRepository.class, SubscriptionRepository.class})
+    @ValueSource(classes = {ContractRepository.class, RewardRepository.class, SubscriptionRepository.class, ProductRepository.class})
     void test_find_all(Class<?> repositoryClass) {
         JpaRepository<?, ?> repository = (JpaRepository<?, ?>) applicationContext.getBean(repositoryClass);
         repository.findAll().forEach(System.out::println);
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {ContractRepository.class, RewardRepository.class, SubscriptionRepository.class})
+    @ValueSource(classes = {ContractRepository.class, RewardRepository.class, SubscriptionRepository.class, ProductRepository.class})
     @SuppressWarnings("unchecked")
     void test_find_by_id(Class<?> repositoryClass) throws ClassNotFoundException, NoSuchFieldException {
         JpaRepository<?, Long> repository = (JpaRepository<?, Long>) applicationContext.getBean(repositoryClass);
@@ -92,7 +103,7 @@ public class CrudRepositoryTests {
     }
 
     @ParameterizedTest
-    @ValueSource(classes = {ContractRepository.class, RewardRepository.class, SubscriptionRepository.class})
+    @ValueSource(classes = {ContractRepository.class, RewardRepository.class, SubscriptionRepository.class, ProductRepository.class})
     @SuppressWarnings("unchecked")
     void test_save(Class<?> repositoryClass) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
         JpaRepository<?, Long> repository = (JpaRepository<?, Long>) applicationContext.getBean(repositoryClass);
